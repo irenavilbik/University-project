@@ -9,8 +9,8 @@ public class Main {
         try{
             Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/university", "root", "Meluska1234");
 
-           viewExamList(connection);
-           // createExam(connection, 107, 20221010);
+           //viewExamList(connection);
+           createExam(connection, 107, 20221010, "Mathematics");
             //viewExamResult(connection, 101);
             //findExamByCourse(connection, "Algorithms");
 
@@ -38,13 +38,14 @@ public class Main {
         }
     }
 
-    public static void createExam(Connection connection, int ExamID, int ExamDATE) {
-        String createExamQuery = "INSERT INTO university.exams(ExamID, ExamDATE) VALUES (?, ?);";
+    public static void createExam(Connection connection, int ExamID, int ExamDATE, String ExamName) {
+        String createExamQuery = "INSERT INTO university.exams(ExamID, ExamDATE, ExamName) VALUES (?, ?, ?);";
 
         try {
             PreparedStatement pStat = connection.prepareStatement(createExamQuery);
             pStat.setString(1, String.valueOf(ExamID));
             pStat.setString(2, String.valueOf(ExamDATE));
+            pStat.setString(3, ExamName);
             pStat.executeUpdate();
 
         } catch (Exception e) {
