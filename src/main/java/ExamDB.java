@@ -1,18 +1,17 @@
 
 
 import java.sql.*;
-import java.text.SimpleDateFormat;
 
-public class Main {
+public class ExamDB implements ExamInterface{
     public static void main(String[] args) {
 
         try{
             Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/university", "root", "Meluska1234");
-
-           //viewExamList(connection);
-           createExam(connection, 107, 20221010, "Mathematics");
-            //viewExamResult(connection, 101);
-            //findExamByCourse(connection, "Algorithms");
+//
+              viewExamList(connection);
+//              createExam(connection, 107, 20221010, "Mathematics");
+//              viewExamResult(connection, 101);
+//              findExamByCourse(connection, "Algorithms");
 
         } catch (Exception e) {
 
@@ -38,6 +37,11 @@ public class Main {
         }
     }
 
+
+    public void viewExamList() throws SQLException, ClassNotFoundException {
+
+    }
+
     public static void createExam(Connection connection, int ExamID, int ExamDATE, String ExamName) {
         String createExamQuery = "INSERT INTO university.exams(ExamID, ExamDATE, ExamName) VALUES (?, ?, ?);";
 
@@ -53,7 +57,7 @@ public class Main {
         }
     }
 
-    public static void viewExamResult(Connection connection, int inputID ) {
+    public static void viewExamResult(Connection connection, int inputID) {
         String getSingleExamResults = "SELECT * FROM university.results where ExamID = " + inputID;
 
         try {
@@ -71,14 +75,15 @@ public class Main {
             e.printStackTrace();
         }
     }
-    public static void findExamByCourse(Connection connection, String inputID ) {
-        String getSingleExamResults =
+
+    public static void findExamByCourse(Connection connection, String inputID) {
+        String findExamByCourse =
                 "select ExamDate, ExamName from exams inner join courses on exams.ExamName = courses.title where courses.Title="
                 + "'"+inputID + "'";
 
         try {
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(getSingleExamResults);
+            ResultSet resultSet = statement.executeQuery(findExamByCourse);
 
             while (resultSet.next()) {
                 System.out.print("Exam's date: " + resultSet.getString(1));
@@ -89,5 +94,6 @@ public class Main {
             e.printStackTrace();
         }
     }
+
 
 }
