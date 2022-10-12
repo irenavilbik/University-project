@@ -21,12 +21,5 @@ public class Exam {
         return ExamDATE;
     }
 
-    @Override
-    public String toString() {
-        return "Exam{" +
-                "ExamID=" + ExamID +
-                ", ExamDATE=" + ExamDATE +
-                ", ExamName='" + ExamName + '\'' +
-                '}';
-    }
+
 }

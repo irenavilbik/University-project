@@ -1,17 +1,14 @@
-
-
 import java.sql.*;
 
-public class ExamDB implements ExamInterface{
+public class ExamDB implements ExamInterface {
     public static void main(String[] args) {
 
-        try{
+        try {
             Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/university", "root", "Meluska1234");
-//
-              viewExamList(connection);
-//              createExam(connection, 107, 20221010, "Mathematics");
-//              viewExamResult(connection, 101);
-//              findExamByCourse(connection, "Algorithms");
+            ExamDB examDB = new ExamDB();
+            //viewExamList(connection);
+            examDB.viewExamResult(connection, 101);
+            //findExamByCourse(connection, "Algorithms");
 
         } catch (Exception e) {
 
@@ -19,7 +16,7 @@ public class ExamDB implements ExamInterface{
         }
     }
 
-    public static void viewExamList(Connection connection) {
+    public void viewExamList(Connection connection) {
         String getAllExamsQuery = "SELECT * FROM university.exams";
 
         try {
@@ -38,11 +35,7 @@ public class ExamDB implements ExamInterface{
     }
 
 
-    public void viewExamList() throws SQLException, ClassNotFoundException {
-
-    }
-
-    public static void createExam(Connection connection, int ExamID, int ExamDATE, String ExamName) {
+    public void createExam(Connection connection, int ExamID, int ExamDATE, String ExamName) {
         String createExamQuery = "INSERT INTO university.exams(ExamID, ExamDATE, ExamName) VALUES (?, ?, ?);";
 
         try {
@@ -57,7 +50,7 @@ public class ExamDB implements ExamInterface{
         }
     }
 
-    public static void viewExamResult(Connection connection, int inputID) {
+    public void viewExamResult(Connection connection, int inputID) {
         String getSingleExamResults = "SELECT * FROM university.results where ExamID = " + inputID;
 
         try {
@@ -76,14 +69,14 @@ public class ExamDB implements ExamInterface{
         }
     }
 
-    public static void findExamByCourse(Connection connection, String inputID) {
-        String findExamByCourse =
+    public void findExamByCourse(Connection connection, String inputID) {
+        String getSingleExamResults =
                 "select ExamDate, ExamName from exams inner join courses on exams.ExamName = courses.title where courses.Title="
-                + "'"+inputID + "'";
+                        + "'" + inputID + "'";
 
         try {
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(findExamByCourse);
+            ResultSet resultSet = statement.executeQuery(getSingleExamResults);
 
             while (resultSet.next()) {
                 System.out.print("Exam's date: " + resultSet.getString(1));
@@ -94,6 +87,5 @@ public class ExamDB implements ExamInterface{
             e.printStackTrace();
         }
     }
-
 
 }
